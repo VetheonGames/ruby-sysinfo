@@ -39,7 +39,7 @@ class FirstRun
       'file_systems' => prompt.yes?('Do you want to display which file systems the drives are using?')
     }
 
-    File.write(config_path, config.to_yaml)
+    File.puts(config_path, config.to_yaml)
     puts 'Configuration saved!'
   end
 end

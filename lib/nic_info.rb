@@ -26,6 +26,7 @@ class NicInfo
       nic_info << info
     end
 
+    File.open('./runtime_log.log', 'w') { |f| f.puts(nic_info.to_json) }
     nic_info
   rescue JSON::ParserError
     [{ model: 'No permission', manufacturer: 'No permission', max_speed: 'No permission' }]

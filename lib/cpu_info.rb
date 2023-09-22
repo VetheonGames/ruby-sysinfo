@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CpuInfo
-  def gather_info
+  def self.gather_info
     cpu_info = {}
     cores = 0
     threads = 0

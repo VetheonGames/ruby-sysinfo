@@ -23,6 +23,7 @@ class UptimeInfo
     uptime_info[:seconds] = seconds if seconds.positive?
 
     # Format the uptime string
+    File.open('./runtime_log.log', 'w') { |f| f.puts(uptime_info.to_json) }
     formatted_uptime = uptime_info.map { |k, v| "#{v} #{k.to_s.capitalize}" }.join(' : ')
 
     { uptime: formatted_uptime }

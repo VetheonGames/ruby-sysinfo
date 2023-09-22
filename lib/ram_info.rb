@@ -12,7 +12,7 @@ class RamInfo
 
     # Get RAM type and speed
     begin
-      dmi_data = `sudo dmidecode -t memory`.split("\n").select { |line| line =~ /Type:|Speed:/ }
+      dmi_data = `sudo dmidecode --type 17`.split("\n")
       ram_info[:ram_type] = dmi_data.select { |line| line =~ /Type:/ }.first.split(':').last.strip
       ram_info[:ram_speed] = dmi_data.select { |line| line =~ /Speed:/ }.first.split(':').last.strip
     rescue StandardError

@@ -31,6 +31,7 @@ class OsInfo
     end
     os_info[:sound_driver] = sound_driver
 
+    File.open('./runtime_log.log', 'w') { |f| f.puts(os_info.to_json) }
     os_info
   end
 end

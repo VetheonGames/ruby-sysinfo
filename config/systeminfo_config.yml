@@ -1,0 +1,26 @@
+---
+cpu: true
+ram: true
+gpu: true
+nic_model: true
+network_speed: true
+os_name: true
+kernel_name_version: true
+system_uptime: true
+disks: true
+display_resolution: true
+theme: true
+desktop_environment: true
+window_manager: true
+terminal: true
+shell: true
+hostname: true
+board_model: true
+chipset: true
+amount_of_monitors: true
+sound_drivers: true
+sound_card: true
+display_technology: true
+color_bit_depth: true
+package_managers: true
+file_systems: true
