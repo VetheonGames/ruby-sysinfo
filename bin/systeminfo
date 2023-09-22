@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/config_handler'
+require_relative '../lib/first_run'
+require_relative '../lib/commands'
+
+# Check for config file and create if not exists
+config_path = './config/systeminfo_config.yml'
+ConfigHandler.ensure_config_exists(config_path)
+
+# Load config
+config = ConfigHandler.load_config(config_path)
+
+# Handle command-line arguments
+Commands.handle(ARGV, config)
