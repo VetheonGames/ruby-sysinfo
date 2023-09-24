@@ -17,7 +17,7 @@ class DisplayHandler
     @info_win = @main_win.subwin(Curses.lines - 4, Curses.cols - 22, 1, 22)
     @menu_win.keypad(true)
 
-    exit_menu = false  # Flag to indicate if the menu should exit
+    exit_menu = false # Flag to indicate if the menu should exit
 
     loop do
       draw_main_box
@@ -86,36 +86,28 @@ class DisplayHandler
     @menu_win.refresh
   end
 
-  def self.draw_info_box
+  def self.draw_info_box(title = 'Information')
     @info_win.box('|', '-')
-    @info_win.setpos(0, @info_win.maxx - 13)
-    @info_win.addstr('Information')
+    title_position = @info_win.maxx - title.length - 2 # 2 for padding
+    @info_win.setpos(0, title_position)
+    @info_win.addstr(title)
     @info_win.refresh
   end
 
   def self.prepare_info_window(title)
     @info_win.clear
-    draw_info_box
-    @info_win.setpos(2, 2)
-    @info_win.attron(Curses.color_pair(1)) { @info_win.addstr(title) }
+    draw_info_box(title)
     @info_win.setpos(3, 2)
-    @info_win.addstr('-' * (title.length + 2))
   end
 
   def self.display_os_info(os_info)
-    @info_win.clear
-    draw_info_box
-    @info_win.setpos(2, 2)
-    @info_win.attron(Curses.color_pair(1)) { @info_win.addstr('OS Information') }
-    @info_win.setpos(3, 2)
-    @info_win.addstr('--------------')
+    prepare_info_window('OS Information')
     display_info(os_info, @info_win)
     @info_win.refresh
   end
 
   def self.display_hardware_info(hardware_info)
-    @info_win.clear
-    draw_info_box
+    prepare_info_window('Hardware Information')
 
     # CPU and RAM on the left side
     left_row = 4
@@ -181,12 +173,7 @@ class DisplayHandler
   end
 
   def self.display_network_info(network_info)
-    @info_win.clear
-    draw_info_box
-    @info_win.setpos(2, 2)
-    @info_win.attron(Curses.color_pair(1)) { @info_win.addstr('Network Information') }
-    @info_win.setpos(3, 2)
-    @info_win.addstr('-------------------')
+    prepare_info_window('Network Information')
     display_info(network_info, @info_win)
     @info_win.refresh
   end
