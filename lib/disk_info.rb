@@ -31,6 +31,7 @@ class DiskInfo
         transport: transport || 'Unknown'
       }
       disk_info << disk
+      File.open('runtime_log.log', 'a') { |f| f.puts("#{disk}") }
     end
 
     disk_info

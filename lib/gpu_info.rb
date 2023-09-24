@@ -7,10 +7,37 @@ class GpuInfo
 
     # Use `lspci` to get basic GPU information
     lspci_output = `lspci | grep VGA`.strip
+
     if lspci_output && !lspci_output.empty?
-      # Extract the model and other details
-      model_match = lspci_output.match(/VGA compatible controller: (.+)$/)
-      gpu_info[:model] = model_match[1] if model_match
+      # Determine the manufacturer
+      manufacturer = case lspci_output
+                     when /NVIDIA/
+                       'NVIDIA'
+                     when /Advanced Micro Devices, Inc./
+                       'AMD'
+                     when /Intel Corporation/
+                       'Intel'
+                     else
+                       'Unknown'
+                     end
+
+      # Extract the model and other details based on manufacturer
+      case manufacturer
+      when 'NVIDIA'
+        model_match = lspci_output.match(/NVIDIA Corporation (\w+) \[.*GTX (\d+ \d+GB)\]/) ||
+                      lspci_output.match(/NVIDIA Corporation (\w+) \[.*RTX (\d+ \d+GB)\]/)
+        gpu_info[:model] = "NVIDIA GTX #{model_match[2]}" if model_match
+      when 'AMD'
+        model_match = lspci_output.match(/Advanced Micro Devices, Inc. \[.*Radeon (\w+ \d+)\]/) ||
+                      lspci_output.match(/Advanced Micro Devices, Inc. \[.*RX (\d+)\]/)
+        gpu_info[:model] = "AMD Radeon #{model_match[1]}" if model_match
+      when 'Intel'
+        model_match = lspci_output.match(/Intel Corporation.*HD Graphics (\d+)/) ||
+                      lspci_output.match(/Intel Corporation.*Iris Xe Graphics/)
+        gpu_info[:model] = "Intel #{model_match[1]}" if model_match
+      else
+        gpu_info[:model] = lspci_output  # Fallback to the original string if no match
+      end
     end
 
     # Fetch Video RAM amount
