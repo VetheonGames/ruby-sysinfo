@@ -1,4 +1,6 @@
 # System Information Gatherer
+If you'd like to support PixelRidge Softworks OpenSource Development, check out our [Patreon](https://patreon.com/PixelRidgeSoftworksOSP)
+If you need more direct help, join our [Discord](https://discord.gg/SQeWBWS8v4)
 
 ## Overview
 
